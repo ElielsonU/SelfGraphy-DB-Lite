@@ -50,7 +50,7 @@ tables = [
       file varchar(500) not null,
       crated date not null,
       user_id integer,
-      foreign key (user_id) references User (id) 
+      foreign key (user_id) references User(id) 
     );
   """,
   """
@@ -58,7 +58,7 @@ tables = [
       id serial not null primary key,
       title varchar(80) not null,
       sketch_id integer,
-      FOREIGN KEY (sketch_id) references Sketch (id) 
+      FOREIGN KEY (sketch_id) references Sketch(id) 
     );
   """,
   """
