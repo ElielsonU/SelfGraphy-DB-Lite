@@ -9,7 +9,7 @@ PORT = "5432"
 tables = [
   """
     create table User (
-      id integer not null primary key,
+      id serial not null primary key,
       username varchar(100) not null,
       fullname varchar(360) not null,
       email varchar(120),
