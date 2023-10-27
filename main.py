@@ -1,102 +1,20 @@
-import psycopg2
-
-DB_NAME = "selfgraphy"
-USER = "postgres"
-PASSWORD = ""
-HOST = "localhost"
-PORT = "5432"
-
-tables = [
-  """
-    create table User (
-      id serial not null primary key,
-      username varchar(100) not null,
-      fullname varchar(360) not null,
-      email varchar(120),
-      password text not null,
-      photo text
-    );
-  """,
-  """
-    create table Document (
-      id serial not null primary key,
-      file varchar(500) not null,
-      created date not null,
-      integer user_id not null,
-      foreign key (user_id) references User(id)
-    )
-  """,
-  """
-    create table Wallet (
-      id serial not null primary key,
-      credits integer,
-      spent float,
-      integer user_id not null,
-      foreign key (user_id) references User(id)
-    )
-  """,
-  """
-    create table Transaction (
-      id serial not null primary key,
-      credits integer,
-      spent float,
-      integer wallet_id not null,
-      foreign key (wallet_id) references Wallet(id)
-    )
-  """,
-  """
-    create table Sketch (
-      id serial not null primary key,
-      file varchar(500) not null,
-      crated date not null,
-      user_id integer,
-      foreign key (user_id) references User(id) 
-    );
-  """,
-  """
-    create table Topic (
-      id serial not null primary key,
-      title varchar(80) not null,
-      sketch_id integer,
-      FOREIGN KEY (sketch_id) references Sketch(id) 
-    );
-  """,
-  """
-    create table Images (
-      id serial not null primary key,
-      title varchar(80),
-      description varchar(200),
-      topic_id integer,
-      foreign key(topic_id) references Topic(topic_id)
-    );
-
-  """,
-  """
-    create table Subtopics (
-      id serial not null primary key,
-      title varchar(500),
-      questions varchar(500),
-      topic_id integer,
-      foreign key(topic_id) references Topic(topic_id)
-    );
-  """
-]
-
-conn = psycopg2.connect(
-    dbname=DB_NAME,
-    user=USER,
-    password=PASSWORD,
-    host=HOST,
-    port=PORT
-)
-
-
-def create_table(sql: str):
-  cursor = conn.cursor()
-  cursor.execute(sql)
-  conn.commit()
-  cursor.close()
+from database import save, exit
+from database.models import create_tables
+from database.queries import insert_into_table, get_all_tables, update_table_row_by_id, remove_row_by_id, get_all_table_instances
 
 if __name__ == "__main__":
-  for table in tables:
-    create_table(table)
+  create_tables()
+  choiced = 1
+  options = [get_all_tables, get_all_table_instances, insert_into_table, update_table_row_by_id, remove_row_by_id, save]
+
+  print("Wellcome!\n\nLet's start managing your database!")
+  while choiced >= 0 and choiced < len(options):
+    print("Choice an option:\n1- get all tables name\n2- get all table instances\n3- add row into a table\n4- update a table value by id\n5- remove and table by id\n6- save your changes\nanything else - exit")
+    try: 
+      choiced = (int(input("R: ")) - 1)
+      options[choiced]()
+    except: break
+    if (choiced == -1): break
+  print("\nGoodbye! :D")
+  exit()
+  pass
