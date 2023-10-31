@@ -13,8 +13,7 @@ connection = psycopg2.connect(
 
 def get_cursor(): return connection.cursor()
 
-def save():
-  connection.commit()
+def save(): connection.commit()
 
 def exit():
   save()
