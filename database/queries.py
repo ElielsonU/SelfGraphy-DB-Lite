@@ -82,8 +82,9 @@ def remove_row_by_id():
 
 def get_all_tables():
   for [tablename, table] in tables.items():
-    print(tablename + ": ")
-    for [key, value] in table.items(): print(f"  {key}{'*' if bool(value) else ''}: {type(value).__name__}\n")
+    print("\n" + tablename + ": ")
+    for [key, value] in table.items(): print(f"  {key}{'*' if bool(value) else ''}: {type(value).__name__}")
+    print()
 
 def get_all_table_instances():
   tablename = input("\nTable name: ")
@@ -121,3 +122,15 @@ def get_tablenames():
   tablenames = []
   for table in tables.keys(): tablenames.append(table)
   return tablenames
+
+def login():
+  username = input("user: ")
+  if (not username): return print("Type something!")
+  password = input("password: ")
+  if (not password): return print("Type something!")
+
+  with get_cursor() as cursor:
+    cursor.execute("select id from users where username = '%s' and password = '%s'"%(username, password))
+    logged_id = cursor.fetchone()
+    if (not logged_id): return 0
+    return logged_id[0]
