@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
   print("Wellcome!\n\nLet's start managing your database!")
   while choiced >= 0 and choiced < len(options):
-    print("Choice an option:\n1- get all tables name\n2- get all table instances\n3- add row into a table\n4- update a table value by id\n5- remove and table by id\n6- save your changes\nanything else - exit")
+    print("Choice an option:\n1- get all tables name\n2- get all table instances\n3- add row into a table\n4- update a table value by id\n5- remove an table by id\n6- save your changes\nanything else - exit")
     try: 
       choiced = (int(input("R: ")) - 1)
       options[choiced]()

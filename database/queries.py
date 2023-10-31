@@ -76,7 +76,7 @@ def remove_row_by_id():
   tablename = input("Table name: ")
   if (not tables.get(tablename)): return print("This table does not exists")
   with get_cursor() as cursor:
-    id = int(input(f"the {tablename} instace: "))
+    id = int(input(f"the {tablename} instace id: "))
     query = f"delete from {tablename} where id = {id}"
     cursor.execute(query)
 
